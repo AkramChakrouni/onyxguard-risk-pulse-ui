@@ -22,9 +22,9 @@ const Landing = () => {
   };
 
   const bulletPoints = [
-    "Real-time Ethereum wallet risk assessment",
-    "Comprehensive security analysis",
-    "Intelligent threat detection"
+    "Private wallet scanning with Oasis Sapphire",
+    "Confidential threat analysis with Oasis ROFL",
+    "Real-time wallet risk intelligence"
   ];
 
   return (
@@ -53,15 +53,14 @@ const Landing = () => {
               variants={itemVariants}
               className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight"
             >
-              <span className="text-onyx-accent">Advanced Security</span> for <br /> Ethereum Assets
+              <span className="text-onyx-accent">Secure.</span> Private. Proven.
             </motion.h1>
             
             <motion.p 
               variants={itemVariants}
               className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
             >
-              OnyxGuard analyzes blockchain activity to identify threats and vulnerabilities in real-time.
-              Enter an Ethereum address to start your security assessment.
+              Ethereum asset risk levels. Source-verified.
             </motion.p>
             
             <motion.div 
@@ -107,7 +106,7 @@ const Landing = () => {
           transition={{ duration: 1, delay: 0.5 }}
           className="bg-card border-t border-border py-4 text-center text-sm text-muted-foreground"
         >
-          © {new Date().getFullYear()} OnyxGuard • Advanced Ethereum Security Analysis
+          © {new Date().getFullYear()} OnyxGuard • Powered by Oasis. Built for trust.
         </motion.div>
       </div>
     </div>

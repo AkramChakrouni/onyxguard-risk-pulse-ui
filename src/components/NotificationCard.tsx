@@ -72,10 +72,6 @@ const NotificationCard = ({ notification, expanded = false, onExpand }: Notifica
             
             <h4 className="font-medium text-base mb-2">{notification.notification_type}</h4>
             
-            <p className="text-muted-foreground line-clamp-2">
-              {notification.reason}
-            </p>
-            
             <div className="mt-3 pt-2 border-t border-border">
               <div className="flex justify-between items-center">
                 <div className="text-xs text-muted-foreground">
