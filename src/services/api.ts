@@ -10,13 +10,16 @@ async function fetchWithErrorHandling<T>(
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
   try {
-    // For development, return mock data immediately without trying to fetch
-    if (process.env.NODE_ENV === "development") {
+    // Check if we should use mock data (only for development)
+    const useMockData = process.env.NODE_ENV === "development";
+    
+    if (useMockData) {
+      // Type assertion to handle generic T
       if (url.includes("/analyze")) {
-        return mockAnalyzeWallet();
+        return mockAnalyzeWallet() as unknown as ApiResponse<T>;
       }
       if (url.includes("/notifications")) {
-        return mockGetNotifications();
+        return mockGetNotifications() as unknown as ApiResponse<T>;
       }
     }
     
@@ -46,12 +49,13 @@ async function fetchWithErrorHandling<T>(
     console.error("API request failed:", error);
     
     // For development, return mock data even if the fetch fails
-    if (process.env.NODE_ENV === "development") {
+    const useMockData = process.env.NODE_ENV === "development";
+    if (useMockData) {
       if (url.includes("/analyze")) {
-        return mockAnalyzeWallet();
+        return mockAnalyzeWallet() as unknown as ApiResponse<T>;
       }
       if (url.includes("/notifications")) {
-        return mockGetNotifications();
+        return mockGetNotifications() as unknown as ApiResponse<T>;
       }
     }
     
