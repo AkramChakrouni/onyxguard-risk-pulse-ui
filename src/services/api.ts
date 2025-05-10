@@ -10,6 +10,16 @@ async function fetchWithErrorHandling<T>(
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
   try {
+    // For development, return mock data immediately without trying to fetch
+    if (process.env.NODE_ENV === "development") {
+      if (url.includes("/analyze")) {
+        return mockAnalyzeWallet();
+      }
+      if (url.includes("/notifications")) {
+        return mockGetNotifications();
+      }
+    }
+    
     const response = await fetch(url, {
       ...options,
       headers: {
@@ -34,6 +44,17 @@ async function fetchWithErrorHandling<T>(
     };
   } catch (error) {
     console.error("API request failed:", error);
+    
+    // For development, return mock data even if the fetch fails
+    if (process.env.NODE_ENV === "development") {
+      if (url.includes("/analyze")) {
+        return mockAnalyzeWallet();
+      }
+      if (url.includes("/notifications")) {
+        return mockGetNotifications();
+      }
+    }
+    
     return {
       data: {} as T,
       status: 500,
@@ -46,7 +67,7 @@ async function fetchWithErrorHandling<T>(
 export async function analyzeWallet(walletAddress: string): Promise<ApiResponse<Notification[]>> {
   const payload: AnalyzeRequest = { address: walletAddress };
   
-  // For development, return mock data
+  // For development, return mock data directly
   if (process.env.NODE_ENV === "development") {
     return mockAnalyzeWallet();
   }
@@ -58,7 +79,7 @@ export async function analyzeWallet(walletAddress: string): Promise<ApiResponse<
 }
 
 export async function getNotifications(): Promise<ApiResponse<Notification[]>> {
-  // For development, return mock data
+  // For development, return mock data directly
   if (process.env.NODE_ENV === "development") {
     return mockGetNotifications();
   }

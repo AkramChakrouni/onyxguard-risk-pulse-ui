@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { analyzeWallet } from "@/services/api";
 import { useToast } from "@/components/ui/use-toast";
+import { toast as sonnerToast } from "@/components/ui/sonner";
 import { useNotifications } from "@/context/NotificationContext";
 
 const WalletInputForm = () => {
@@ -46,7 +47,7 @@ const WalletInputForm = () => {
     try {
       const response = await analyzeWallet(address);
       
-      if (response.status === 200) {
+      if (response.status === 200 && Array.isArray(response.data)) {
         // Add unique IDs to notifications
         const notificationsWithIds = response.data.map((notification, index) => ({
           ...notification,
@@ -54,23 +55,26 @@ const WalletInputForm = () => {
         }));
         
         setNotifications(notificationsWithIds);
-        navigate("/dashboard");
         
-        toast({
-          title: "Analysis Complete",
+        // Use Sonner toast for success feedback - it's less intrusive
+        sonnerToast.success("Analysis Complete", {
           description: `Successfully analyzed wallet ${address.substring(0, 6)}...${address.substring(address.length - 4)}`,
         });
+        
+        // Navigate to dashboard
+        navigate("/dashboard");
       } else {
         toast({
           title: "Analysis Failed",
-          description: response.message || "Failed to analyze wallet",
+          description: response.message || "Failed to analyze wallet. Please try again.",
           variant: "destructive",
         });
       }
     } catch (error) {
+      console.error("Error analyzing wallet:", error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {
