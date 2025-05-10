@@ -85,7 +85,7 @@ const Dashboard = () => {
           </motion.div>
         ) : (
           <motion.div
-            initial={{ opacity: a: 0 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center py-20 text-center"
           >
